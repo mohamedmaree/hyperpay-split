@@ -65,17 +65,23 @@ or
 ## note 
 - if you want to create 'authorization' only one time and pass it to that function use that code:
 ```php
+    $split_mode = config('hyperpaySplit.mode');
+    if($split_mode == 'live'){
+        $url       = config('hyperpaySplit.live_login_url');
+    }else{
+        $url       = config('hyperpaySplit.test_login_url');
+    }
     $response =  Http::asForm()->post($url ,
                             [
-                                'email'    => 'hyperpaySplit.email',
-                                'password' => 'hyperpaySplit.password'
+                                'email'    => config('hyperpaySplit.email'),
+                                'password' => config('hyperpaySplit.password')
                             ]);
     $array = json_decode($response->getBody()->getContents(), true);
     $authorization = $array['data']['accessToken']; 
 
 ```
 
-- note:in test mode don't insert $bank_iban_number because we use fixed one SA4280000621608010034790
+- note: in test mode don't insert $bank_iban_number because we use fixed one SA4280000621608010034790
 
 
 
