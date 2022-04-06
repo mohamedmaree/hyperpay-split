@@ -14,8 +14,8 @@ php artisan vendor:publish --provider="maree\hyperpaySplit\HyperpaySplitServiceP
 then change your hyperpaySplit config from config/hyperpaySplit.php file
 ```php
     "mode"              => "test" , //or live
-    "email"             =>  "",
-    "password"          =>  "",
+    "email"             => "",
+    "password"          => "",
     "config_id"         => "",
     "configuration_key" => "",
 ```
