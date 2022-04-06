@@ -32,6 +32,9 @@ class HyperpaySplit {
                                         'password' => config('hyperpaySplit.password')
                                     ]);
             $array = json_decode($response->getBody()->getContents(), true);
+            if($array['status'] == false){
+                return [ 'status' => $array['status'] ,'data' => json_encode($array['data']) ,'message' => $array['message'] , 'errors' => $array['errors'] ];
+            }
             $authorization = $array['data']['accessToken'];
         }
         /******** end create accessToken ******/
@@ -81,17 +84,16 @@ class HyperpaySplit {
         $notification_key_from_configration = config('hyperpaySplit.configuration_key');
         
         $headers                   = getallheaders();
-        $iv_from_http_header       = $headers['X-Initialization-Vector'];
-        $auth_tag_from_http_header = $headers['X-Authentication-Tag'];
+        $iv_from_http_header       = ($headers['X-Initialization-Vector'])??'';
+        $auth_tag_from_http_header = ($headers['X-Authentication-Tag'])??'';
         $http                      = json_decode($http_body);
-        $body                      = $http->encryptedBody;
+        $body                      = ($http->encryptedBody)??'';
 
         $key         = hex2bin($notification_key_from_configration);
         $iv          = hex2bin($iv_from_http_header);
         $auth_tag    = hex2bin($auth_tag_from_http_header);
         $cipher_text = hex2bin($body);
         $result      = openssl_decrypt($cipher_text, "aes-256-gcm", $key, OPENSSL_RAW_DATA, $iv, $auth_tag);
-
         if($result = json_decode($result)){
             $uniqueId = ($result->data->transactions[0]->uniqueId)??'';
             if($result->status == true){
