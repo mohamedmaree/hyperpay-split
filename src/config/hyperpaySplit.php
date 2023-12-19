@@ -57,6 +57,6 @@ return [
     "test_order_url"  => "https://splits.sandbox.hyperpay.com/api/v1/orders",
     "live_order_url"  => "https://splits.hyperpay.com/api/v1/orders",
 
-    "test_account_id" => "SA4280000621608010034790",
+    "test_account_id" => "",
 
 ];
