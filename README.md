@@ -81,7 +81,7 @@ or
 
 ```
 
-- note: in test mode don't insert $bank_iban_number because we use fixed one SA4280000621608010034790
+- note: in test mode don't insert $bank_iban_number 
 
 
 
